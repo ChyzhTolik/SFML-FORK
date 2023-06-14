@@ -58,8 +58,14 @@ template <typename IntegerType, typename... Bytes>
 {
     static_assert(sizeof(IntegerType) >= sizeof...(Bytes), "IntegerType not large enough to contain bytes");
 
-    IntegerType integer = 0;
+    // IntegerType integer = 0;
+    // std::size_t index   = 0;
+    // return ((integer |= static_cast<IntegerType>(static_cast<IntegerType>(byte) << 8 * index++)), ...);
+
+    int integer = 0;
     std::size_t index   = 0;
-    return ((integer |= static_cast<IntegerType>(static_cast<IntegerType>(byte) << 8 * index++)), ...);
+    auto result = ((integer |= static_cast<int>(byte) << 8 * index++), ...);
+    
+    return static_cast<IntegerType>(result);
 }
 } // namespace sf
